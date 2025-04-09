@@ -1,0 +1,331 @@
+/* 🔹 Style global */
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Utilisation de 100vh pour la hauteur de la page */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 🔹 Texte principal */
+#text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    line-height: 1.3;
+    z-index: 2;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+/* 🔹 Curseur animé */
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 30px;
+    background: white;
+    margin-left: 5px;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* 🔹 Fond Matrix */
+.matrix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.matrix span {
+    position: absolute;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    opacity: 0;
+    animation: matrixAnim 0.5s linear infinite;
+}
+
+@keyframes matrixAnim {
+    0% { opacity: 0; transform: translateY(0px); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(20px); }
+}
+
+/* 🔹 Chiffres aléatoires */
+.matrix-number {
+    position: absolute;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: bold;
+    animation: flicker 1s infinite alternate ease-in-out;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+/* 🔹 Responsive */
+@media (max-width: 768px) {
+    #text {
+        font-size: 2rem;
+        max-width: 90%;
+        margin-top: 0;
+    }
+
+    .cursor {
+        height: 24px;
+    }
+
+    .matrix span {
+        font-size: 1rem;
+    }
+
+    .matrix-number {
+        font-size: 1.2rem;
+    }
+    #language-selection {
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+        align-items: center;
+    }
+
+    button {
+        width: 100%;
+        max-width: 300px;
+        font-size: 1.2rem;
+        padding: 12px 20px;
+    }
+
+    #text {
+        font-size: 1.8rem;
+    }
+
+    .cursor {
+        height: 20px;
+    }
+
+}
+
+/* 🔹 Logo sans glitch visible au début */
+.logo-no-glitch {
+    width: 100px;
+    height: 100px;
+    background-image: url('logo_fnac.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+/* 🔹 Animation du logo glitch */
+@keyframes glitchLogo {
+    0%, 100% {
+        background-image: url('logo_fnac.png');
+    }
+    92.5% {
+        background-image: url('logo_fnac_glitch1.png');
+    }
+    95% {
+        background-image: url('logo_fnac_glitch2.png');
+    }
+    97.5% {
+        background-image: url('logo_fnac_glitch3.png');
+    }
+}
+
+.logo-glitch {
+    width: 100px;
+    height: 100px;
+    background-image: url('logo_fnac.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    display: none; /* Masqué au départ */
+    animation: glitchLogo 2.5s infinite steps(1);
+}
+
+/* 🔹 Boutons de sélection de langue */
+#language-selection {
+    position: absolute;
+    top: 50%;  /* Modifié de 40% à 50% pour centrer verticalement */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Ajouté pour un centrage parfait */
+    display: flex;
+    gap: 20px;
+    z-index: 20;
+}
+
+/* 🔹 Style des boutons */
+button {
+    padding: 15px 25px;
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 200px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* 🔹 Boutons au survol */
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+#rewardCard {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; /* La carte commence invisible */
+    z-index: 10;
+    perspective: 1000px;
+}
+
+/* 🔹 Animation fade-in */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#rewardCard.show {
+    display: flex;
+    animation: fade-in 1s ease-out forwards;
+}
+
+/* 🔹 Conteneur de la carte */
+#cardInner {
+    width: 300px;
+    height: 180px;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+    cursor: pointer;
+    position: relative;
+    transform-origin: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 🔹 Carte (face avant et arrière) */
+.card {
+    position: absolute;
+    width: 300px;
+    height: 180px;
+    background: white;
+    border-radius: 12px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+/* 🔹 Carte avant */
+.card-front {
+    background-color: #fff;
+    font-size: 34px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 2;
+}
+
+/* 🔹 Carte arrière */
+.card-back {
+    background-color: #fff;
+    transform: rotateY(180deg);
+    font-size: 56px;
+    font-weight: bold;
+    color: #fff;
+    z-index: 1;
+}
+
+/* 🔹 Effet de rotation */
+#cardInner.flipped {
+    transform: rotateY(180deg);
+}
+
+/* 🔹 Animation de bordure */
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.card::after,
+.card::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px;
+    border-radius: 12px; /* Garde les bords arrondis de la carte */
+    animation: 10s spin linear infinite;
+    opacity: 0.1;
+}
+
+.card::before {
+    filter: blur(2rem);
+    opacity: 0.6;
+}
+
+/* 🔹 Animation de rotation de la bordure */
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+    to {
+        --angle: 360deg;
+    }
+}
