@@ -39,35 +39,49 @@ function startAnimation() {
 }
 
 function typeText() {
-    const phrasesSplit = phrases[selectedLang][index].split("! "); // coupe après "Félicitations !"
+    const phrasesSplit = phrases[selectedLang][index].split("! ");
     const firstPart = phrasesSplit[0] + "!"; // "Félicitations !"
-    const secondPart = phrasesSplit[1] ? " " + phrasesSplit[1] : ""; // " Vous êtes..."
+    const secondPart = phrasesSplit[1] ? phrasesSplit[1] : ""; // "Tu viens de..."
 
-    textElement.innerHTML = ""; // Reset du texte
+    textElement.innerHTML = ""; // Reset
     charIndex = 0;
 
-    function typePart(text, callback) {
+    function typePart(text, callback, isFirstPart = false) {
         if (charIndex < text.length) {
-            textElement.innerHTML += text.charAt(charIndex);
+            const span = document.createElement("span");
+
+            // Si c'est la première partie, on applique une classe pour le style
+            if (isFirstPart) {
+                span.classList.add("highlight");
+            }
+
+            span.textContent = text.charAt(charIndex);
+            textElement.appendChild(span);
             charIndex++;
-            setTimeout(() => typePart(text, callback), 25);
+            setTimeout(() => typePart(text, callback, isFirstPart), 25);
         } else {
             callback();
         }
     }
 
-    // Écrit "Félicitations !", puis petite pause, puis le reste
+    // Phase 1 : écrit "Félicitations !" avec la classe "highlight" pour le jaune
     typePart(firstPart, () => {
         setTimeout(() => {
+            // 🔁 Ajoute un vrai retour à la ligne
+            const br = document.createElement("br");
+            textElement.appendChild(br);
+
+            // Phase 2 : écrit le reste
             charIndex = 0;
             typePart(secondPart, () => {
                 setTimeout(() => {
                     eraseText();
                 }, 1750);
             });
-        }, 500); // 🕒 Pause de 500ms après "Félicitations !"
-    });
+        }, 500); // Pause après le "!"
+    }, true); // Passer true pour la première partie
 }
+
 
 
 function eraseText() {
