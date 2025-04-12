@@ -16,10 +16,10 @@ document.getElementById('btn-nl').addEventListener('click', () => {
 // Phrases pour les animations
 const phrases = {
     fr: [
-        "Félicitations ! Tu viens de débloquer une récompense exclusive !"
+        "Félicitations ! Vous venez de débloquer une récompense exclusive !"
     ],
     nl: [
-        "Proficiat! Je hebt net een exclusieve beloning vrijgespeeld!"
+        "Proficiat! U hebt net een exclusieve beloning vrijgespeeld!"
     ]
 };
 
@@ -132,8 +132,8 @@ function updateCardText() {
     const cardText = document.getElementById('card-text');
     
     if (selectedLang === 'nl') {
-        cardText.textContent = 'Klik hier en toon deze kaart aan een verkoper';
+        cardText.textContent = 'Klik hier en toon deze kaart aan een verkoper.';
     } else {
-        cardText.textContent = 'Clique ici et présente cette carte à un vendeur';
+        cardText.textContent = 'Cliquez ici et présentez cette carte à un vendeur';
     }
 }
